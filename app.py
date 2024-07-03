@@ -49,7 +49,7 @@ def predict():
     return jsonify({"predictions": predictions.tolist()})
 
 def run_flask():
-    run_simple('localhost', 5000, flask_app)
+    run_simple('bigfivepersonalitytestapi.streamlit.app', 5000, flask_app)
 
 # Streamlit UI
 st.title("Personality Test Cluster Prediction API")
