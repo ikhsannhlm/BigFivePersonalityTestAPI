@@ -50,7 +50,7 @@ def predict():
 
 def run_flask():
     from werkzeug.serving import run_simple
-    run_simple('localhost', 5001, flask_app)
+    run_simple('0.0.0.0', 5000, flask_app)
 
 # Streamlit UI
 st.title("Personality Test Cluster Prediction API")
