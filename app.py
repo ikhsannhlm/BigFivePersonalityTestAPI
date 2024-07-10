@@ -4,8 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from flask import Flask, request, jsonify
-from werkzeug.serving import run_simple
-from threading import Thread
+from flask_cors import CORS  # Import CORS from flask_cors
 
 # Fungsi untuk memuat model K-Means dari file .h5
 def load_model(filepath):
@@ -29,6 +28,7 @@ model = load_model('kmeans_model.h5')
 
 # Setup Flask App within Streamlit
 flask_app = Flask(__name__)
+CORS(flask_app)  # Enable CORS for your Flask app
 
 @flask_app.route('/predict', methods=['POST'])
 def predict():
@@ -49,11 +49,12 @@ def predict():
     return jsonify({"predictions": predictions.tolist()})
 
 def run_flask():
-    run_simple('0.0.0.0', 5001, flask_app)
+    from werkzeug.serving import run_simple
+    run_simple('localhost', 5001, flask_app)
 
 # Streamlit UI
 st.title("Personality Test Cluster Prediction API")
-st.write("Streamlit is running alongside a Flask API. You can send POST requests to http://localhost:5000/predict")
+st.write("Streamlit is running alongside a Flask API. You can send POST requests to http://localhost:5001/predict")
 
 if st.button('Start Flask API'):
     st.write("Starting Flask API...")
